@@ -1,0 +1,21 @@
+🐳 How to Run This Docker CLI Tool
+After building or pulling the image from Docker Hub, you must allow the container to communicate with your host Docker engine.
+
+✅ Correct Way to Run:
+docker run -it -v /var/run/docker.sock:/var/run/docker.sock pradeep228/docker-menu
+⚠️ Why Mount /var/run/docker.sock?
+When you run this Python tool inside a Docker container, it needs to execute docker commands. But:
+
+By default, Docker is not installed inside containers
+
+Even if it was, containers can't control the host Docker engine
+
+This causes errors like:
+
+/bin/sh: 1: docker: not found
+✅ Mounting the host Docker socket (/var/run/docker.sock) lets your container control Docker on the host machine — securely and efficiently.
+
+🧠 TL;DR
+Method	Status	Notes
+docker run pradeep228/...	❌ Fails	Docker not found inside the container
+docker run -v /var/run/docker.sock:/var/run/docker.sock ...	✅
